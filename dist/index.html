@@ -3,55 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Curve Viewer</title>
+    <title>Zone Viewer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/Zone-Viewer/assets/index-DLG6tlGf.js"></script>
-    <link rel="stylesheet" crossorigin href="/Zone-Viewer/assets/index-BGr-_yHr.css">
+    <script type="module" crossorigin src="/Zone-Viewer/assets/index-D2wQLINs.js"></script>
+    <link rel="stylesheet" crossorigin href="/Zone-Viewer/assets/index-CyEaIMKJ.css">
   </head>
   <body>
     <div class="page-layout">
       <header>
-        <h1>Curve viewer</h1>
+        <h1>Distance zone viewer</h1>
       </header>
       <div class="main-area">
-        <div class="curve-creator">
+        <div class="zone-creator">
           <h2>Control Panel</h2>
           <div class="control-panel">
-            <button id="addCurveBtn" class="btn">Add curve</button>
-            <button id="addFLBtn" class="btn">Add fault level</button>
+            <button id="add-zone-btn" class="btn">Add zone</button>
+            <button id="add-circuit-element-btn" class="btn">
+              Add circuit element
+            </button>
+            <button id="add-plant-element-btn" class="btn">
+              Add plant element
+            </button>
           </div>
           <h2>Chart data</h2>
-          <div class="curve-data-cards">
-            <div class="curve-card cdc0"></div>
-            <div class="curve-card cdc1"></div>
-            <div class="curve-card cdc2"></div>
-            <div class="curve-card cdc3"></div>
-            <div class="curve-card cdc4"></div>
-            <div class="curve-card cdc5"></div>
-            <div class="curve-card cdc6"></div>
-            <div class="curve-card cdc7"></div>
-            <div class="curve-card cdc8"></div>
-            <div class="curve-card cdc9"></div>
+          <div class="zone-data-cards">
+            <div class="zone-card zc0"></div>
+            <div class="zone-card zc1"></div>
+            <div class="zone-card zc2"></div>
+            <div class="zone-card zc3"></div>
+            <div class="zone-card zc4"></div>
+            <div class="zone-card zc5"></div>
+            <div class="zone-card zc6"></div>
+            <div class="zone-card zc7"></div>
+            <div class="zone-card zc8"></div>
+            <div class="zone-card zc9"></div>
           </div>
-          <div class="fl-data-cards">
-            <div class="fl-card fldc0"></div>
-            <div class="fl-card fldc1"></div>
-            <div class="fl-card fldc2"></div>
-            <div class="fl-card fldc3"></div>
-            <div class="fl-card fldc4"></div>
-            <div class="fl-card fldc5"></div>
-            <div class="fl-card fldc6"></div>
-            <div class="fl-card fldc7"></div>
-            <div class="fl-card fldc8"></div>
-            <div class="fl-card fldc9"></div>
+          <div class="circuit-element-data-cards">
+            <div class="circuit-element-card cedc0"></div>
+            <div class="circuit-element-card cedc1"></div>
+            <div class="circuit-element-card cedc2"></div>
+            <div class="circuit-element-card cedc3"></div>
+            <div class="circuit-element-card cedc4"></div>
+            <div class="circuit-element-card cedc5"></div>
+            <div class="circuit-element-card cedc6"></div>
+            <div class="circuit-element-card cedc7"></div>
+            <div class="circuit-element-card cedc8"></div>
+            <div class="circuit-element-card cedc9"></div>
           </div>
         </div>
-        <div class="curve-area">
+        <div class="zone-area">
           <h2>Grading chart</h2>
           <div class="chart-area">
             <canvas id="theChart"></canvas>
@@ -62,101 +67,140 @@
         <p>Footer content</p>
       </footer>
 
-      <div id="addCurveModal" class="modal">
+      <div id="add-zone-modal" class="modal">
         <div class="modal-content">
-          <form action="" class="form-input" id="curve-creation-form">
-            <label for="curve-name">Curve name:</label>
+          <form
+            action=""
+            class="form-input creation-form"
+            id="zone-creation-form"
+          >
+            <label for="zone-name">Zone name:</label>
             <input
               type="text"
-              id="curve-name"
-              placeholder="e.g. SGT1 HVOC"
+              id="zone-name"
+              placeholder="e.g. Zone 1"
               required
             />
-            <label for="curve-type">Select curve type:</label>
-            <select name="curve-type" id="curve-type" required>
+
+            <label for="zone-direction">Select direction:</label>
+            <select name="zone-direction" id="zone-direction" required>
               <option value="">--Choose--</option>
-              <option value="SI">Standard inverse</option>
-              <option value="VI">Very inverse</option>
-              <option value="EI">Extremely inverse</option>
-              <option value="LTI">Long time inverse</option>
+              <option value="fwd">Forward</option>
+              <option value="rev">Reverse</option>
+              <option value="off">Offset</option>
             </select>
-            <label for="pick-up-setting">Pick up setting:</label>
+
+            <label for="fwd-r">Forward R+:</label>
             <input
               type="number"
-              id="pick-up-setting"
-              name="pick-up-setting"
+              id="fwd-r-pos"
+              name="fwd-r-pos"
+              step="any"
               required
             />
-            <label for="time-multiplier">Time multiplier:</label>
+
+            <label for="fwd-x">Forward X+:</label>
             <input
               type="number"
-              id="time-multiplier"
-              name="time-multiplier"
-              min="0"
-              max="1"
-              step="0.001"
+              id="fwd-x-pos"
+              name="fwd-x-pos"
+              step="any"
               required
             />
-            <button type="submit" class="btn">Add</button>
+
+            <div class="btn-grid">
+              <button type="submit" class="btn add">Add</button>
+              <button type="submit" class="btn save" disabled="true">
+                Save
+              </button>
+              <button type="submit" class="btn delete" disabled="true">
+                Delete
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      <div id="editCurveModal" class="modal">
-        <!-- Modal content -->
+      <div id="add-circuit-element-modal" class="modal">
         <div class="modal-content">
-          <!-- <span class="close">&times;</span> -->
-          <form action="" class="form-input" id="curve-modification-form">
-            <label for="curve-name">Curve name:</label>
-            <input type="text" id="m-curve-name" />
-            <label for="curve-type">Curve type:</label>
-            <select name="curve-type" id="m-curve-type">
-              <option value="">--Choose--</option>
-              <option value="SI">Standard inverse</option>
-              <option value="VI">Very inverse</option>
-              <option value="EI">Extremely inverse</option>
-              <option value="LTI">Long time inverse</option>
-            </select>
-            <label for="pick-up-setting">Pick up setting:</label>
-            <input
-              type="number"
-              id="m-pick-up-setting"
-              name="pick-up-setting"
-            />
-            <label for="time-multiplier">Time multiplier:</label>
-            <input
-              type="number"
-              id="m-time-multiplier"
-              name="time-multiplier"
-              min="0"
-              max="1"
-              step="0.001"
-            />
-            <button type="button" class="btn" id="m-save-btn">Save</button>
-            <button type="button" class="btn" id="m-delete-btn">Delete</button>
-          </form>
-        </div>
-      </div>
-
-      <div id="addFLModal" class="modal">
-        <div class="modal-content">
-          <form action="" class="form-input" id="fault-level-creation-form">
-            <label for="fault-location">Fault location:</label>
+          <form
+            action=""
+            class="form-input creation-form"
+            id="circuit-element-creation-form"
+          >
+            <label for="from-bus">From bus:</label>
             <input
               type="text"
-              id="fault-location"
-              placeholder="e.g. SGT1 max let through."
+              id="from-bus"
+              placeholder="e.g. KINT2"
               required
             />
-            <label for="fault-level">Fault level:</label>
-            <input type="number" id="fault-level" name="fault-level" />
+            <label for="from-bus-no">From bus no:</label>
+            <input
+              type="number"
+              id="from-bus-no"
+              placeholder="e.g. 123456"
+              required
+            />
+            <label for="to-bus">To bus:</label>
+            <input type="text" id="to-bus" placeholder="e.g. TEAL2" required />
+            <label for="to-bus-no">To bus no:</label>
+            <input
+              type="number"
+              id="to-bus-no"
+              placeholder="e.g. 123456"
+              required
+            />
+            <p>Impedances:</p>
+            <div class="impedance-grid">
+              <label for="R+">R+:</label>
+              <input
+                type="number"
+                id="R+"
+                class="impedance-input"
+                name="X0"
+                step="any"
+              />
+              <label for="X+">X+:</label>
+              <input
+                type="number"
+                id="X+"
+                class="impedance-input"
+                name="X+"
+                step="any"
+              />
+              <label for="R0">R0:</label>
+              <input
+                type="number"
+                id="R0"
+                class="impedance-input"
+                name="R0"
+                step="any"
+              />
+              <label for="R0">X0:</label>
+              <input
+                type="number"
+                id="X0"
+                class="impedance-input"
+                name="X0"
+                step="any"
+              />
+            </div>
 
-            <button type="submit" class="btn">Add</button>
+            <div class="btn-grid">
+              <button type="submit" class="btn add">Add</button>
+              <button type="submit" class="btn save" disabled="true">
+                Save
+              </button>
+              <button type="submit" class="btn delete" disabled="true">
+                Delete
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      <div id="editFLModal" class="modal">
+      <div id="edit-circuit-element-modal" class="modal">
         <div class="modal-content">
           <form action="" class="form-input" id="fault-level-modification-form">
             <label for="fault-location">Fault location:</label>

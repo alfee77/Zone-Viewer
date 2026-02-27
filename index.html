@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zone Viewer</title>
+    <link rel="stylesheet" href="src/main.css" />
+    <link rel="stylesheet" href="src/modal.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page-layout">
+      <header>
+        <h1>Zone viewer</h1>
+      </header>
+      <div class="main-area">
+        <div class="zone-creator">
+          <h2>Control Panel</h2>
+          <div class="control-panel">
+            <button id="add-zone-btn" class="btn">Add zone</button>
+            <button id="add-circuit-element-btn" class="btn">
+              Add circuit element
+            </button>
+            <button id="add-plant-element-btn" class="btn">
+              Add plant element
+            </button>
+          </div>
+          <h2>Chart data</h2>
+          <div class="zone-data-cards">
+            <div class="zone-card zc0"></div>
+            <div class="zone-card zc1"></div>
+            <div class="zone-card zc2"></div>
+            <div class="zone-card zc3"></div>
+            <div class="zone-card zc4"></div>
+            <div class="zone-card zc5"></div>
+            <div class="zone-card zc6"></div>
+            <div class="zone-card zc7"></div>
+            <div class="zone-card zc8"></div>
+            <div class="zone-card zc9"></div>
+          </div>
+          <div class="circuit-element-data-cards">
+            <div class="circuit-element-card cedc0"></div>
+            <div class="circuit-element-card cedc1"></div>
+            <div class="circuit-element-card cedc2"></div>
+            <div class="circuit-element-card cedc3"></div>
+            <div class="circuit-element-card cedc4"></div>
+            <div class="circuit-element-card cedc5"></div>
+            <div class="circuit-element-card cedc6"></div>
+            <div class="circuit-element-card cedc7"></div>
+            <div class="circuit-element-card cedc8"></div>
+            <div class="circuit-element-card cedc9"></div>
+          </div>
+        </div>
+        <div class="zone-area">
+          <h2>Grading chart</h2>
+          <div class="chart-area">
+            <canvas id="theChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>Footer content</p>
+      </footer>
+
+      <div id="add-zone-modal" class="modal">
+        <div class="modal-content">
+          <form
+            action=""
+            class="form-input creation-form"
+            id="zone-creation-form"
+          >
+            <label for="zone-name">Zone name:</label>
+            <input
+              type="text"
+              id="zone-name"
+              placeholder="e.g. Zone 1"
+              required
+            />
+
+            <label for="zone-direction">Select direction:</label>
+            <select name="zone-direction" id="zone-direction" required>
+              <option value="">--Choose--</option>
+              <option value="fwd">Forward</option>
+              <option value="rev">Reverse</option>
+              <option value="off">Offset</option>
+            </select>
+
+            <label for="fwd-r">Forward R+:</label>
+            <input
+              type="number"
+              id="fwd-r-pos"
+              name="fwd-r-pos"
+              step="any"
+              required
+            />
+
+            <label for="fwd-x">Forward X+:</label>
+            <input
+              type="number"
+              id="fwd-x-pos"
+              name="fwd-x-pos"
+              step="any"
+              required
+            />
+
+            <div class="btn-grid">
+              <button type="submit" class="btn add">Add</button>
+              <button type="submit" class="btn save" disabled="true">
+                Save
+              </button>
+              <button type="submit" class="btn delete" disabled="true">
+                Delete
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="add-circuit-element-modal" class="modal">
+        <div class="modal-content">
+          <form
+            action=""
+            class="form-input creation-form"
+            id="circuit-element-creation-form"
+          >
+            <label for="from-bus">From bus:</label>
+            <input
+              type="text"
+              id="from-bus"
+              placeholder="e.g. KINT2"
+              required
+            />
+            <label for="from-bus-no">From bus no:</label>
+            <input
+              type="number"
+              id="from-bus-no"
+              placeholder="e.g. 123456"
+              required
+            />
+            <label for="to-bus">To bus:</label>
+            <input type="text" id="to-bus" placeholder="e.g. TEAL2" required />
+            <label for="to-bus-no">To bus no:</label>
+            <input
+              type="number"
+              id="to-bus-no"
+              placeholder="e.g. 123456"
+              required
+            />
+            <p>Impedances:</p>
+            <div class="impedance-grid">
+              <label for="R+">R+:</label>
+              <input
+                type="number"
+                id="R+"
+                class="impedance-input"
+                name="X0"
+                step="any"
+              />
+              <label for="X+">X+:</label>
+              <input
+                type="number"
+                id="X+"
+                class="impedance-input"
+                name="X+"
+                step="any"
+              />
+              <label for="R0">R0:</label>
+              <input
+                type="number"
+                id="R0"
+                class="impedance-input"
+                name="R0"
+                step="any"
+              />
+              <label for="R0">X0:</label>
+              <input
+                type="number"
+                id="X0"
+                class="impedance-input"
+                name="X0"
+                step="any"
+              />
+            </div>
+
+            <div class="btn-grid">
+              <button type="submit" class="btn add">Add</button>
+              <button type="submit" class="btn save" disabled="true">
+                Save
+              </button>
+              <button type="submit" class="btn delete" disabled="true">
+                Delete
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="edit-circuit-element-modal" class="modal">
+        <div class="modal-content">
+          <form action="" class="form-input" id="fault-level-modification-form">
+            <label for="fault-location">Fault location:</label>
+            <input
+              type="text"
+              id="flm-fault-location"
+              placeholder="e.g. SGT1 max let through."
+              required
+            />
+            <label for="fault-level">Fault level:</label>
+            <input type="number" id="flm-fault-level" name="fault-level" />
+
+            <button type="button" class="btn" id="flm-save-btn">Save</button>
+            <button type="button" class="btn" id="flm-delete-btn">
+              Delete
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="src/index.js" type="module"></script>
+</html>

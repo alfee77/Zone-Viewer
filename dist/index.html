@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curve Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/Zone-Viewer/assets/index-DLG6tlGf.js"></script>
+    <link rel="stylesheet" crossorigin href="/Zone-Viewer/assets/index-BGr-_yHr.css">
+  </head>
+  <body>
+    <div class="page-layout">
+      <header>
+        <h1>Curve viewer</h1>
+      </header>
+      <div class="main-area">
+        <div class="curve-creator">
+          <h2>Control Panel</h2>
+          <div class="control-panel">
+            <button id="addCurveBtn" class="btn">Add curve</button>
+            <button id="addFLBtn" class="btn">Add fault level</button>
+          </div>
+          <h2>Chart data</h2>
+          <div class="curve-data-cards">
+            <div class="curve-card cdc0"></div>
+            <div class="curve-card cdc1"></div>
+            <div class="curve-card cdc2"></div>
+            <div class="curve-card cdc3"></div>
+            <div class="curve-card cdc4"></div>
+            <div class="curve-card cdc5"></div>
+            <div class="curve-card cdc6"></div>
+            <div class="curve-card cdc7"></div>
+            <div class="curve-card cdc8"></div>
+            <div class="curve-card cdc9"></div>
+          </div>
+          <div class="fl-data-cards">
+            <div class="fl-card fldc0"></div>
+            <div class="fl-card fldc1"></div>
+            <div class="fl-card fldc2"></div>
+            <div class="fl-card fldc3"></div>
+            <div class="fl-card fldc4"></div>
+            <div class="fl-card fldc5"></div>
+            <div class="fl-card fldc6"></div>
+            <div class="fl-card fldc7"></div>
+            <div class="fl-card fldc8"></div>
+            <div class="fl-card fldc9"></div>
+          </div>
+        </div>
+        <div class="curve-area">
+          <h2>Grading chart</h2>
+          <div class="chart-area">
+            <canvas id="theChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>Footer content</p>
+      </footer>
+
+      <div id="addCurveModal" class="modal">
+        <div class="modal-content">
+          <form action="" class="form-input" id="curve-creation-form">
+            <label for="curve-name">Curve name:</label>
+            <input
+              type="text"
+              id="curve-name"
+              placeholder="e.g. SGT1 HVOC"
+              required
+            />
+            <label for="curve-type">Select curve type:</label>
+            <select name="curve-type" id="curve-type" required>
+              <option value="">--Choose--</option>
+              <option value="SI">Standard inverse</option>
+              <option value="VI">Very inverse</option>
+              <option value="EI">Extremely inverse</option>
+              <option value="LTI">Long time inverse</option>
+            </select>
+            <label for="pick-up-setting">Pick up setting:</label>
+            <input
+              type="number"
+              id="pick-up-setting"
+              name="pick-up-setting"
+              required
+            />
+            <label for="time-multiplier">Time multiplier:</label>
+            <input
+              type="number"
+              id="time-multiplier"
+              name="time-multiplier"
+              min="0"
+              max="1"
+              step="0.001"
+              required
+            />
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="editCurveModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <!-- <span class="close">&times;</span> -->
+          <form action="" class="form-input" id="curve-modification-form">
+            <label for="curve-name">Curve name:</label>
+            <input type="text" id="m-curve-name" />
+            <label for="curve-type">Curve type:</label>
+            <select name="curve-type" id="m-curve-type">
+              <option value="">--Choose--</option>
+              <option value="SI">Standard inverse</option>
+              <option value="VI">Very inverse</option>
+              <option value="EI">Extremely inverse</option>
+              <option value="LTI">Long time inverse</option>
+            </select>
+            <label for="pick-up-setting">Pick up setting:</label>
+            <input
+              type="number"
+              id="m-pick-up-setting"
+              name="pick-up-setting"
+            />
+            <label for="time-multiplier">Time multiplier:</label>
+            <input
+              type="number"
+              id="m-time-multiplier"
+              name="time-multiplier"
+              min="0"
+              max="1"
+              step="0.001"
+            />
+            <button type="button" class="btn" id="m-save-btn">Save</button>
+            <button type="button" class="btn" id="m-delete-btn">Delete</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="addFLModal" class="modal">
+        <div class="modal-content">
+          <form action="" class="form-input" id="fault-level-creation-form">
+            <label for="fault-location">Fault location:</label>
+            <input
+              type="text"
+              id="fault-location"
+              placeholder="e.g. SGT1 max let through."
+              required
+            />
+            <label for="fault-level">Fault level:</label>
+            <input type="number" id="fault-level" name="fault-level" />
+
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="editFLModal" class="modal">
+        <div class="modal-content">
+          <form action="" class="form-input" id="fault-level-modification-form">
+            <label for="fault-location">Fault location:</label>
+            <input
+              type="text"
+              id="flm-fault-location"
+              placeholder="e.g. SGT1 max let through."
+              required
+            />
+            <label for="fault-level">Fault level:</label>
+            <input type="number" id="flm-fault-level" name="fault-level" />
+
+            <button type="button" class="btn" id="flm-save-btn">Save</button>
+            <button type="button" class="btn" id="flm-delete-btn">
+              Delete
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
